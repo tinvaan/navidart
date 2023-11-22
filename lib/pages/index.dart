@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navidart/pages/favorites.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _IndexState extends State<Index> {
       case 0:
         page = Placeholder();
       case 1:
-        page = Placeholder();
+        page = Favorites();
       default:
         throw UnimplementedError("no widget defined for $pageIndex");
     }
