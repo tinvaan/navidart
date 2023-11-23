@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../utils.dart';
+import '../widgets/canvas.dart';
+import '../widgets/navbar.dart';
 import '../widgets/favorites/add.dart' show AddFavorites;
 import '../widgets/favorites/show.dart' show ShowFavorites;
 import '../widgets/favorites/empty.dart' show EmptyFavorites;
@@ -18,11 +19,6 @@ class Create extends StatefulWidget {
   State<Create> createState() => _CreateState();
 }
 
-class Remove extends StatefulWidget {
-  @override
-  State<Remove> createState() => _RemoveState();
-}
-
 
 /// Stateful widget states
 class _DisplayState extends State<Display> {
@@ -31,9 +27,9 @@ class _DisplayState extends State<Display> {
     Map<String, String> params = GoRouterState.of(context).uri.queryParameters;
     Widget page = params.keys.contains('empty') ? ShowFavorites() : EmptyFavorites();
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(body: Row(mainAxisSize: MainAxisSize.min,
-                                children: [container(page, context),],));
+    return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
+      return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
+                                           Expanded(child: Canvas(page: page))]));
     });
   }
 }
@@ -41,20 +37,9 @@ class _DisplayState extends State<Display> {
 class _CreateState extends State<Create> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(body: Row(mainAxisSize: MainAxisSize.min,
-                                children: [container(AddFavorites(), context)],));
-    });
-  }
-}
-
-// TODO: Implement remove screen {iff required}
-class _RemoveState extends State<Remove> {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(body: Row(mainAxisSize: MainAxisSize.min,
-                                children: [container(EmptyFavorites(), context)],));
+    return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
+      return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
+                                           Expanded(child: Canvas(page: AddFavorites()))]));
     });
   }
 }
