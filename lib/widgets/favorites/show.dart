@@ -23,18 +23,21 @@ class _ShowFavoritesState extends State<ShowFavorites> {
 
     print("Showing list of favorites");
     return ListView(
+      shrinkWrap: true,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton.icon(
-              label: Text('Add New'),
-              icon: Icon(Icons.person_add),
-              onPressed: () { setState(() { context.go('/favorites/add'); }); },
-            ),
-            SizedBox(width: 10),
-          ],
-        ),
+        // Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     ElevatedButton.icon(
+        //       label: Text('Add New'),
+        //       icon: Icon(Icons.person_add),
+        //       onPressed: () { setState(() { context.go('/favorites/add'); }); },
+        //     ),
+        //     SizedBox(width: 10),
+        //   ],
+        // ),
+        Text("You have ${app.favorites.length} favorites"),
+        SizedBox(height: 10.0),
         for (var contact in app.favorites)
           ListTile(
             leading: Icon(Icons.favorite),
