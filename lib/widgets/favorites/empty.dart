@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 
 class EmptyFavorites extends StatefulWidget {
@@ -16,17 +17,11 @@ class _EmptyFavoritesState extends State<EmptyFavorites> {
       children: [
         Text('No favorites yet.'),
         SizedBox(height: 10),
-        Row(mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.person_add),
-                label: Text('Add New'),
-                onPressed: () {
-                  // setState(() { add(app); });
-                },
-              ),
-            ],
-        ),
+        ElevatedButton.icon(
+          label: Text('Add New'),
+          icon: Icon(Icons.person_add),
+          onPressed: () { setState(() { context.go('/favorites/add'); });}
+        )
       ],
     ),);
   }
