@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
-import 'pages/index.dart' show Index;
+import 'pages/routes.dart';
 
 
 class App extends StatelessWidget {
@@ -12,14 +11,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appColor = ColorScheme.fromSeed(seedColor: Colors.indigoAccent);
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp(home: Index(),
-                         title: 'Navidart',
-                         theme: ThemeData(useMaterial3: true,
-                                           colorScheme: appColor,),),
-    );
+    ThemeData style = ThemeData(useMaterial3: true,
+                                colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent));
+    return MaterialApp.router(routerConfig: appRouter, theme: style);
   }
 }
 
