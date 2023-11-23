@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../main.dart' show AppState;
 
@@ -14,6 +15,12 @@ class _ShowFavoritesState extends State<ShowFavorites> {
   @override
   Widget build(BuildContext context) {
     var app = context.watch<AppState>();
+    if (app.favorites.isEmpty) {
+      setState(() {
+        context.go(Uri(path: '/favorites', queryParameters: {'empty': true}).toString());
+      });
+    }
+
     print("Showing list of favorites");
     return ListView(
       children: [
@@ -21,12 +28,9 @@ class _ShowFavoritesState extends State<ShowFavorites> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton.icon(
-              icon: Icon(Icons.person_add),
               label: Text('Add New'),
-              onPressed: () {
-                // TODO: reload the view to different state
-                // setState(() { add(app); });
-              },
+              icon: Icon(Icons.person_add),
+              onPressed: () { setState(() { context.go('/favorites/add'); }); },
             ),
             SizedBox(width: 10),
           ],
