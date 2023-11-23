@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 
 class Navbar extends StatefulWidget {
@@ -8,11 +9,22 @@ class Navbar extends StatefulWidget {
 
   @override
   State<Navbar> createState() => _NavbarState();
+
+  String route(int index) {
+    switch (index) {
+      case 0:
+        return '/';
+      case 1:
+        return '/favorites';
+      default:
+        throw ErrorDescription('Route not available for index $index');
+    }
+  }
 }
 
 
 class _NavbarState extends State<Navbar> {
-  var _index = 0;
+  int _index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +36,12 @@ class _NavbarState extends State<Navbar> {
       destinations: pages,
       selectedIndex: _index,
       extended: widget.constraints.maxWidth >= 600,
-      onDestinationSelected: (value) { setState(() { _index = value; }); },
+      onDestinationSelected: (value) {
+        setState(() {
+          _index = value;
+          context.go(widget.route(value));
+        });
+      },
     );
   }
 }
