@@ -9,18 +9,28 @@ import '../widgets/favorites/empty.dart' show EmptyFavorites;
 
 
 /// Stateful widgets
-class Display extends StatefulWidget {
-  @override
-  State<Display> createState() => _DisplayState();
-}
-
 class Create extends StatefulWidget {
   @override
   State<Create> createState() => _CreateState();
 }
 
+class Display extends StatefulWidget {
+  @override
+  State<Display> createState() => _DisplayState();
+}
+
 
 /// Stateful widget states
+class _CreateState extends State<Create> {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
+      return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
+                                           Expanded(child: Canvas(page: AddFavorites()))]));
+    });
+  }
+}
+
 class _DisplayState extends State<Display> {
   @override
   Widget build(BuildContext context) {
@@ -30,16 +40,6 @@ class _DisplayState extends State<Display> {
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
       return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
                                            Expanded(child: Canvas(page: page))]));
-    });
-  }
-}
-
-class _CreateState extends State<Create> {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
-      return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
-                                           Expanded(child: Canvas(page: AddFavorites()))]));
     });
   }
 }
