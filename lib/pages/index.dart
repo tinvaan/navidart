@@ -11,8 +11,6 @@ class Index extends StatefulWidget {
 
 
 class _IndexState extends State<Index> {
-  var pageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
