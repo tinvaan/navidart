@@ -20,8 +20,8 @@ class App extends StatelessWidget {
 
 
 class AppState extends ChangeNotifier {
-  var current = '+6586791807';
   List<Contact> favorites = [];
+  String current = String.fromEnvironment('DEFAULT_PHONE_NUMBER');
 
   Future addFavorites(String name, String number) async {
     if (await FlutterContacts.requestPermission()) {
