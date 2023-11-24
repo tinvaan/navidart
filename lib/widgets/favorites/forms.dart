@@ -23,7 +23,7 @@ class NewFavoriteForm extends StatelessWidget {
           ),
           SizedBox(height: 10),
           FloatingActionButton(
-            child: Icon(Icons.edit_note_rounded),
+            child: Icon(Icons.person_add),
             onPressed: () => context.go('/favorites/add'),
           )
         ])
