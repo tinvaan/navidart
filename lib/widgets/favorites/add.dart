@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../utils.dart';
 import '../favorites/forms.dart';
 
 
@@ -9,6 +10,6 @@ class AddFavorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Adding a new favorite');
-    return Center(child: NewFavoriteForm());
+    return container(Center(child: NewFavoriteForm()), context);
   }
 }
