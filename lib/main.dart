@@ -23,6 +23,19 @@ class AppState extends ChangeNotifier {
   List<Contact> favorites = [];
   String current = String.fromEnvironment('DEFAULT_PHONE_NUMBER');
 
+  void add(String name, String number) {
+    print('Adding a new contact to favorites ...');
+    favorites.add(Contact(displayName: name, phones: [Phone(number)], notes: [Note('NAVIDART')]));
+    print('Favorites: $favorites');
+    print('Notifying listeners ...');
+    notifyListeners();
+  }
+
+  void remove(Contact addr) {
+    favorites.remove(addr);
+    notifyListeners();
+  }
+
   Future addFavorites(String name, String number) async {
     if (await FlutterContacts.requestPermission()) {
       var contact = Contact(displayName: name, phones: [Phone(number)],
