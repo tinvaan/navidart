@@ -11,6 +11,12 @@ import '../widgets/favorites/empty.dart' show EmptyFavorites;
 
 /// Stateful widgets
 class Create extends StatefulWidget {
+  final String? name;
+  final String? phone;
+
+  // ctor
+  Create({super.key, this.name, this.phone});
+
   @override
   State<Create> createState() => _CreateState();
 }
@@ -27,7 +33,7 @@ class _CreateState extends State<Create> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
       return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
-                                           Expanded(child: Canvas(page: AddFavorites()))]));
+                                           Expanded(child: Canvas(page: AddFavorites(name: widget.name, phone: widget.phone)))]));
     });
   }
 }
