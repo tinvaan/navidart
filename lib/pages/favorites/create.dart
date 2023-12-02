@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import './store.dart';
 import '../../widgets/canvas.dart';
 import '../../widgets/navbar.dart';
 
@@ -9,7 +9,6 @@ import '../../widgets/navbar.dart';
 class Create extends StatefulWidget {
   final String? name;
   final String? phone;
-  final Store favorites = Store();
 
   Create({super.key, this.name, this.phone});   // ctor
 
@@ -18,6 +17,21 @@ class Create extends StatefulWidget {
 }
 
 class _CreateState extends State<Create> {
+  List<String> favorites = [];
+  late SharedPreferences prefs;
+
+  // Load favorites from shared preferences into memory.
+  Future<void> sync() async {
+    prefs = await SharedPreferences.getInstance();
+    favorites = prefs.getStringList('favorites') ?? [];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sync();
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController nameCtrl = TextEditingController();
@@ -48,7 +62,8 @@ class _CreateState extends State<Create> {
                 child: Icon(Icons.person_add),
                 onPressed: () {
                   setState(() {
-                    widget.favorites.append(nameCtrl.text, phoneCtrl.text);
+                    favorites.add('${nameCtrl.text},${phoneCtrl.text}');
+                    prefs.setStringList('favorites', favorites);
                   });
                 }
               )

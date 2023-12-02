@@ -3,29 +3,36 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import './store.dart';
 import '../../widgets/canvas.dart';
 import '../../widgets/navbar.dart';
 
 
 class Display extends StatefulWidget {
-  final Store favorites = Store();
-
   @override
   State<Display> createState() => _DisplayState();
 }
 
 class _DisplayState extends State<Display> {
+  List<String> favorites = [];
+  late SharedPreferences prefs;
+
+  // Load favorites from shared preferences into memory.
+  Future<void> sync() async {
+    prefs = await SharedPreferences.getInstance();
+    favorites = prefs.getStringList('favorites') ?? [];
+  }
+
   @override
   void initState() {
     super.initState();
-    widget.favorites.sync();
+    sync();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget page = widget.favorites.items.isEmpty ? blank() : list();
+    Widget page = favorites.isEmpty ? blank() : list();
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
       return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
                                            Expanded(child: Canvas(page: page))]));
@@ -63,9 +70,9 @@ class _DisplayState extends State<Display> {
         //     SizedBox(width: 10),
         //   ],
         // ),
-        Text("You have ${widget.favorites.count()} favorites"),
+        Text("You have ${favorites.length} favorites"),
         SizedBox(height: 10.0),
-        for (var contact in widget.favorites.items)
+        for (var contact in favorites)
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text(contact.split(',')[0]),
