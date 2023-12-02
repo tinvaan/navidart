@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Store {
   List<String> items = [];
-  late final SharedPreferences prefs;
+  late SharedPreferences prefs;
 
   Future<void> sync() async {
     prefs = await SharedPreferences.getInstance();
