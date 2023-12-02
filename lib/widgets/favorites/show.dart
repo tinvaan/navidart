@@ -1,9 +1,9 @@
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
+import 'dart:async';
 
-import '../../main.dart' show AppState;
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ShowFavorites extends StatefulWidget {
@@ -13,10 +13,17 @@ class ShowFavorites extends StatefulWidget {
 
 
 class _ShowFavoritesState extends State<ShowFavorites> {
+  List<String> favorites = [];
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+ 
   @override
   Widget build(BuildContext context) {
-    var app = context.watch<AppState>();
-    if (app.favorites.isEmpty) {
+    if (favorites.isEmpty) {
       setState(() {
         context.go(Uri(path: '/favorites', queryParameters: {'empty': true}).toString());
       });
@@ -37,15 +44,23 @@ class _ShowFavoritesState extends State<ShowFavorites> {
         //     SizedBox(width: 10),
         //   ],
         // ),
-        Text("You have ${app.favorites.length} favorites"),
+        Text("You have ${favorites.length} favorites"),
         SizedBox(height: 10.0),
-        for (var contact in app.favorites)
+        for (var contact in favorites)
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text(contact.displayName),
-            subtitle: Text(contact.phones[0].toString()),
+            title: Text(contact.split(',')[0]),
+            subtitle: Text(contact.split(',')[1]),
           ),
       ],
     );
   }
+
+ Future<void> load() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favorites = prefs.getStringList('favorites') ?? [];
+    });
+  }
+
 }
