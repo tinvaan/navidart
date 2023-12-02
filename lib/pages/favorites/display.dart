@@ -17,10 +17,15 @@ class Display extends StatefulWidget {
 }
 
 class _DisplayState extends State<Display> {
+  @override
+  void initState() {
+    super.initState();
+    widget.favorites.sync();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget page = widget.favorites.empty() as bool ? blank() : list();
+    Widget page = widget.favorites.items.isEmpty ? blank() : list();
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints constraints) {
       return Scaffold(body: Row(children: [SafeArea(child: Navbar(constraints: constraints,)),
                                            Expanded(child: Canvas(page: page))]));

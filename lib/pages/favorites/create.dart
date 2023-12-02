@@ -46,7 +46,11 @@ class _CreateState extends State<Create> {
               FloatingActionButton(
                 tooltip: 'Please enter name and phone number',
                 child: Icon(Icons.person_add),
-                onPressed: () => widget.favorites.append(nameCtrl.text, phoneCtrl.text),
+                onPressed: () {
+                  setState(() {
+                    widget.favorites.append(nameCtrl.text, phoneCtrl.text);
+                  });
+                }
               )
             ])
           )))
