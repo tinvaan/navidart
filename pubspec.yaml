@@ -14,6 +14,7 @@ dependencies:
   go_router: ^12.1.1
   cupertino_icons: ^1.0.2
   flutter_contacts: ^1.1.7+1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
