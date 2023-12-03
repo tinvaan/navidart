@@ -54,12 +54,20 @@ class _CreateState extends State<Create> {
               SizedBox(height: 10),
               SizedBox(
                 width: 250,
-                child: TextField(controller: nameCtrl, decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Name")),)
+                child: TextField(
+                  controller: nameCtrl,
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Name")),
+                )
               ),
               SizedBox(height: 10),
               SizedBox(
                 width: 250,
-                child: TextField(controller: phoneCtrl, decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Phone No.")),)
+                child: TextField(
+                  controller: phoneCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Phone No.")),
+                )
               ),
               SizedBox(height: 10),
               FloatingActionButton(
