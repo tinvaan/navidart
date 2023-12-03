@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import '../../widgets/canvas.dart';
 import '../../widgets/navbar.dart';
@@ -86,7 +87,9 @@ class _DisplayState extends State<Display> {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [ElevatedButton(child: Icon(Icons.phone),
-                                        onPressed: () => {}),
+                                        onPressed: () async {
+                                          FlutterPhoneDirectCaller.callNumber(contact.split(',')[1]);
+                                        }),
                          SizedBox(width: 5.0),
                          ElevatedButton(child: Icon(Icons.delete),
                                         onPressed: () => { setState(() => pop(index) )})],
