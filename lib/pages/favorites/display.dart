@@ -24,6 +24,11 @@ class _DisplayState extends State<Display> {
     favorites = prefs.getStringList('favorites') ?? [];
   }
 
+  void clear() {
+    favorites.clear();
+    prefs.setStringList('favorites', favorites);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,13 +61,16 @@ class _DisplayState extends State<Display> {
 
   Widget list() {
     return ListView(
-      shrinkWrap: true,
       children: [
         ListTile(
           title: Text("You have ${favorites.length} favorites"),
-          trailing: ElevatedButton(
-            child: Icon(Icons.person_add),
-            onPressed: () => { setState(() => context.go('/favorites/add') ) }, 
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [ElevatedButton(child: Icon(Icons.person_add),
+                                      onPressed: () => { setState(() => context.go('/favorites/add') ) }),
+                       SizedBox(width: 5.0,),
+                       ElevatedButton(child: Icon(Icons.cleaning_services),
+                                      onPressed: () => { setState(() => clear() )})],
           ),
         ),
         SizedBox(height: 10.0),
