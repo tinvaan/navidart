@@ -26,6 +26,11 @@ class _CreateState extends State<Create> {
     favorites = prefs.getStringList('favorites') ?? [];
   }
 
+  void append(String name, String phone) {
+    favorites.add('$name,$phone');
+    prefs.setStringList('favorites', favorites);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +50,7 @@ class _CreateState extends State<Create> {
             child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AppBar(title: Text("Create New Favorite")),
+              Title(color: Colors.black, child: Text("Create New Favorite")),
               SizedBox(height: 10),
               SizedBox(
                 width: 250,
@@ -60,12 +65,7 @@ class _CreateState extends State<Create> {
               FloatingActionButton(
                 tooltip: 'Please enter name and phone number',
                 child: Icon(Icons.person_add),
-                onPressed: () {
-                  setState(() {
-                    favorites.add('${nameCtrl.text},${phoneCtrl.text}');
-                    prefs.setStringList('favorites', favorites);
-                  });
-                }
+                onPressed: () { setState(() => append(nameCtrl.text, phoneCtrl.text) ); }
               )
             ])
           )))
