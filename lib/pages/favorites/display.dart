@@ -29,6 +29,12 @@ class _DisplayState extends State<Display> {
     prefs.setStringList('favorites', favorites);
   }
 
+  String pop(int index) {
+    String popped = favorites.removeAt(index);
+    prefs.setStringList('favorites', favorites);
+    return popped;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -74,14 +80,16 @@ class _DisplayState extends State<Display> {
           ),
         ),
         SizedBox(height: 10.0),
-        for (var contact in favorites)
+        for (var (index, contact) in favorites.indexed)
           ListTile(
             leading: Icon(Icons.favorite),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [ElevatedButton(onPressed: () => {}, child: Icon(Icons.phone)),
+              children: [ElevatedButton(child: Icon(Icons.phone),
+                                        onPressed: () => {}),
                          SizedBox(width: 5.0),
-                         ElevatedButton(onPressed: () => {}, child: Icon(Icons.delete))],
+                         ElevatedButton(child: Icon(Icons.delete),
+                                        onPressed: () => { setState(() => pop(index) )})],
             ),
             title: Text(contact.split(',')[0]),
             subtitle: Text(contact.split(',')[1]),
