@@ -52,23 +52,27 @@ class _DisplayState extends State<Display> {
   }
 
   Widget blank() {
-    return Center(child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('No favorites yet.'),
-        SizedBox(height: 10),
-        ElevatedButton.icon(
-          label: Text('Add New'),
-          icon: Icon(Icons.person_add),
-          onPressed: () { setState(() { context.go('/favorites/add'); });}
-        )
-      ]
-    ));
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('No favorites yet.'),
+          SizedBox(height: 10),
+          ElevatedButton.icon(
+            label: Text('Add New'),
+            icon: Icon(Icons.person_add),
+            onPressed: () { setState(() { context.go('/favorites/add'); });}
+          )
+        ]
+      )
+    );
   }
 
   Widget list() {
     return ListView(
       children: [
+        AppBar(title: Text('Favorites'), backgroundColor: Colors.indigoAccent),
         ListTile(
           title: Text("You have ${favorites.length} favorites"),
           trailing: Row(
