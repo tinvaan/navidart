@@ -55,26 +55,26 @@ class _DisplayState extends State<Display> {
   }
 
   Widget list() {
-    print("Showing list of favorites");
     return ListView(
       shrinkWrap: true,
       children: [
-        // Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     ElevatedButton.icon(
-        //       label: Text('Add New'),
-        //       icon: Icon(Icons.person_add),
-        //       onPressed: () { setState(() { context.go('/favorites/add'); }); },
-        //     ),
-        //     SizedBox(width: 10),
-        //   ],
-        // ),
-        Text("You have ${favorites.length} favorites"),
+        ListTile(
+          title: Text("You have ${favorites.length} favorites"),
+          trailing: ElevatedButton(
+            child: Icon(Icons.person_add),
+            onPressed: () => { setState(() => context.go('/favorites/add') ) }, 
+          ),
+        ),
         SizedBox(height: 10.0),
         for (var contact in favorites)
           ListTile(
             leading: Icon(Icons.favorite),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [ElevatedButton(onPressed: () => {}, child: Icon(Icons.phone)),
+                         SizedBox(width: 5.0),
+                         ElevatedButton(onPressed: () => {}, child: Icon(Icons.delete))],
+            ),
             title: Text(contact.split(',')[0]),
             subtitle: Text(contact.split(',')[1]),
           ),
