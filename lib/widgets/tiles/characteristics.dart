@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import './descriptor.dart';
 import "../../utils/snackbar.dart";
@@ -12,7 +14,7 @@ class CharacteristicTile extends StatefulWidget {
   final BluetoothCharacteristic characteristic;
   final List<DescriptorTile> descriptorTiles;
 
-  const CharacteristicTile({Key? key, required this.characteristic, required this.descriptorTiles}) : super(key: key);
+  const CharacteristicTile({super.key, required this.characteristic, required this.descriptorTiles});
 
   @override
   State<CharacteristicTile> createState() => _CharacteristicTileState();
@@ -21,14 +23,23 @@ class CharacteristicTile extends StatefulWidget {
 class _CharacteristicTileState extends State<CharacteristicTile> {
   List<int> _value = [];
 
+  late SharedPreferences prefs;
   late StreamSubscription<List<int>> _lastValueSubscription;
 
   @override
   void initState() {
     super.initState();
-    _lastValueSubscription = widget.characteristic.lastValueStream.listen((value) {
+    _lastValueSubscription = widget.characteristic.lastValueStream.listen((value) async {
       _value = value;
-      print('{{{{ cmd = $value }}}}');
+
+      // Notify the most recent contact
+      prefs = await SharedPreferences.getInstance();
+      List<String> contacts = prefs.getStringList('contacts') ?? [];
+      if (contacts.isNotEmpty) {
+        print('Calling ${contacts.last.split(',')[1]} ...');
+        await FlutterPhoneDirectCaller.callNumber(contacts.last.split(',')[1]);
+      }
+
       setState(() {});
     });
   }
